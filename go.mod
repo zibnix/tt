@@ -1,3 +1,3 @@
 module github.com/zibnix/tt
 
-go 1.19
+go 1.17
