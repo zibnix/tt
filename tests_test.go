@@ -9,6 +9,9 @@ import (
 func TestIsNil(t *testing.T) {
 	IsNil(t, nil)
 
+	var nilInterface error
+	IsNil(t, nilInterface)
+
 	var typedNil *int
 	IsNil(t, typedNil)
 
@@ -59,6 +62,16 @@ func TestIsNilFalseNeg(t *testing.T) {
 		t.Fatal("Non nil *func was called nil.")
 	}
 
+	var str interface{} = "str"
+
+	if isNil(str) == nil {
+		t.Fatal("Untyped interface{} with non-nil value was called nil.")
+	}
+
+	if isNil(&str) == nil {
+		t.Fatal("Untyped *interface{} with non-nil value was called nil.")
+	}
+
 	fmt.Println("IsNilFalseNeg passed.")
 }
 
@@ -78,6 +91,10 @@ func TestNotNil(t *testing.T) {
 	f := func() {}
 	NotNil(t, f)
 	NotNil(t, &f)
+
+	var str interface{} = "str"
+	NotNil(t, str)
+	NotNil(t, &str)
 
 	fmt.Println("NotNil passed.")
 }
@@ -164,6 +181,9 @@ func TestExpect(t *testing.T) {
 		t.Fatal("Interface with type and nil value should not == <nil>")
 	}
 	Expect(t, typedInterface, nil)
+
+	var str interface{} = "str"
+	Expect(t, str, "str")
 
 	Expect(t, 5, 5)
 
@@ -319,6 +339,11 @@ func TestRefuteFalseNeg(t *testing.T) {
 		t.Fatal("Raw nil was not equal to raw nil.")
 	}
 
+	var nilInterface error
+	if refute(nilInterface, nil) == nil {
+		t.Fatal("Nil error was not equal to nil.")
+	}
+
 	var typedNil *int
 	if refute(typedNil, nil) == nil {
 		t.Fatal("*int was not equal to nil.")
@@ -331,6 +356,11 @@ func TestRefuteFalseNeg(t *testing.T) {
 	}
 	if refute(typedInterface, nil) == nil {
 		t.Fatal("Interface with type and nil value was not equal to nil")
+	}
+
+	var str interface{} = "str"
+	if refute(str, "str") == nil {
+		t.Fatal("Untyped interface{} str was not equal to literal.")
 	}
 
 	if refute(5, 5) == nil {
