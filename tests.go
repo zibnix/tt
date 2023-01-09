@@ -18,7 +18,7 @@ func isNil(a interface{}) error {
 	tp := reflect.TypeOf(a)
 
 	if tp != nil && (!isNillable(tp.Kind()) || !reflect.ValueOf(a).IsNil()) {
-		return fmt.Errorf("Expected nil, but got %v (type %T)\n", a, a)
+		return fmt.Errorf("expected nil, but got %v (type %T)", a, a)
 	}
 
 	return nil
@@ -36,7 +36,7 @@ func notNil(a interface{}) error {
 	tp := reflect.TypeOf(a)
 
 	if tp == nil || (isNillable(tp.Kind()) && reflect.ValueOf(a).IsNil()) {
-		return fmt.Errorf("Expected not nil, but got %v (type %T)\n", a, a)
+		return fmt.Errorf("expected not nil, but got %v (type %T)", a, a)
 	}
 
 	return nil
@@ -74,10 +74,10 @@ func expect(actual, expected interface{}) error {
 		return isNil(actual)
 	} else if btype.Kind() == reflect.Func {
 		if reflect.ValueOf(actual).Pointer() != reflect.ValueOf(expected).Pointer() {
-			return fmt.Errorf("Expected func %v (type %T) to equal func %v (type %T).", expected, expected, actual, actual)
+			return fmt.Errorf("expected func %v (type %T) to equal func %v (type %T)", expected, expected, actual, actual)
 		}
 	} else if !reflect.DeepEqual(actual, expected) {
-		return fmt.Errorf("Expected %v (type %T) - Got %v (type %T)", expected, expected, actual, actual)
+		return fmt.Errorf("expected %v (type %T) -- got %v (type %T)", expected, expected, actual, actual)
 	}
 
 	// not reachable
@@ -97,10 +97,10 @@ func refute(actual, unexpected interface{}) error {
 		return notNil(actual)
 	} else if btype.Kind() == reflect.Func {
 		if reflect.ValueOf(actual).Pointer() == reflect.ValueOf(unexpected).Pointer() {
-			return fmt.Errorf("Expected func %v (type %T) to not equal func %v (type %T).", unexpected, unexpected, actual, actual)
+			return fmt.Errorf("expected func %v (type %T) to not equal func %v (type %T)", unexpected, unexpected, actual, actual)
 		}
 	} else if reflect.DeepEqual(actual, unexpected) {
-		return fmt.Errorf("Did not expect %v (type %T) - Got %v (type %T)", unexpected, unexpected, actual, actual)
+		return fmt.Errorf("did not expect %v (type %T) -- got %v (type %T)", unexpected, unexpected, actual, actual)
 	}
 
 	// not reachable
