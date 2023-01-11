@@ -1,7 +1,6 @@
 package tt
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -21,8 +20,6 @@ func TestIsNil(t *testing.T) {
 		t.Fatal("Interface with type and nil value should not == <nil>")
 	}
 	IsNil(t, typedInterface)
-
-	fmt.Println("IsNil passed.")
 }
 
 func TestIsNilFalseNeg(t *testing.T) {
@@ -71,8 +68,6 @@ func TestIsNilFalseNeg(t *testing.T) {
 	if isNil(&str) == nil {
 		t.Fatal("Untyped *interface{} with non-nil value was called nil.")
 	}
-
-	fmt.Println("IsNilFalseNeg passed.")
 }
 
 func TestNotNil(t *testing.T) {
@@ -95,8 +90,6 @@ func TestNotNil(t *testing.T) {
 	var str interface{} = "str"
 	NotNil(t, str)
 	NotNil(t, &str)
-
-	fmt.Println("NotNil passed.")
 }
 
 func TestNotNilFalseNeg(t *testing.T) {
@@ -118,8 +111,6 @@ func TestNotNilFalseNeg(t *testing.T) {
 	if notNil(typedInterface) == nil {
 		t.Fatal("Interface with type and nil value was called non-nil.")
 	}
-
-	fmt.Println("NotNilFalseNeg passed.")
 }
 
 func TestIsNillable(t *testing.T) {
@@ -166,8 +157,6 @@ func TestIsNillable(t *testing.T) {
 			t.Fatalf("Non-nillable kind %v was called not nillable.", k)
 		}
 	}
-
-	fmt.Println("IsNillable passed.")
 }
 
 func TestExpect(t *testing.T) {
@@ -213,8 +202,6 @@ func TestExpect(t *testing.T) {
 		"k2": 6,
 	}
 	Expect(t, m1, m2)
-
-	fmt.Println("Expect passed.")
 }
 
 func TestExpectFalseNeg(t *testing.T) {
@@ -280,8 +267,6 @@ func TestExpectFalseNeg(t *testing.T) {
 	if expect(m1, m3) == nil {
 		t.Fatal("Maps of different types were equal.")
 	}
-
-	fmt.Println("ExpectFalseNeg passed.")
 }
 
 func TestRefute(t *testing.T) {
@@ -330,8 +315,6 @@ func TestRefute(t *testing.T) {
 		"k2": "6",
 	}
 	Refute(t, m1, m3)
-
-	fmt.Println("Refute passed.")
 }
 
 func TestRefuteFalseNeg(t *testing.T) {
@@ -405,6 +388,4 @@ func TestRefuteFalseNeg(t *testing.T) {
 	if refute(m1, m2) == nil {
 		t.Fatal("Maps with same type and values were not equal.")
 	}
-
-	fmt.Println("RefuteFalseNeg passed.")
 }
